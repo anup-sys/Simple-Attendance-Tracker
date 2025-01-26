@@ -1,0 +1,32 @@
+import datetime
+def mark_attendance():
+    current_date = datetime.datetime.now().strftime("%Y-%m-%d")
+    print(f"\nAttendance for {current_date}")
+
+    num_students = int(input("Enter the number of students: "))
+    attendance = []
+    for i in range(num_students):
+        student_name = input(f"Enter name of student {i+1}: ")
+        status = input(f"Is {student_name} present? (y/n): ").lower()
+        
+        if status == 'y':
+            attendance.append((student_name, "Present"))
+        else:
+            attendance.append((student_name, "Absent"))
+    print("\nAttendance Summary")
+    print("-" * 30)
+    print(f"{'Student Name':<20} {'Status'}")
+    print("-" * 30)
+    for student, status in attendance:
+        print(f"{student:<20} {status}")
+    save_to_file = input("\nDo you want to save the attendance to a file? (y/n): ").lower()
+    if save_to_file == 'y':
+        with open(f"attendance_{current_date}.txt", 'w') as file:
+            file.write(f"Attendance for {current_date}\n")
+            file.write("-" * 30 + "\n")
+            file.write(f"{'Student Name':<20} {'Status'}\n")
+            file.write("-" * 30 + "\n")
+            for student, status in attendance:
+                file.write(f"{student:<20} {status}\n")
+        print(f"Attendance saved to attendance_{current_date}.txt")
+mark_attendance()
